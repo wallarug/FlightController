@@ -11,7 +11,8 @@ gp = Gamepad(usb_hid.devices)
 
 # Create some buttons. The physical buttons are connected
 # to ground on one side and these and these pins on the other.
-button_pins = (board.D2, board.D3, board.D4, board.D5)
+# Engine Ignition
+button_pins = (board.SERVO1, board.SERVO2, board.SERVO3, board.SERVO4)
 
 # Map the buttons to button numbers on the Gamepad.
 # gamepad_buttons[i] will send that button number when buttons[i]
@@ -23,9 +24,19 @@ for button in buttons:
     button.direction = digitalio.Direction.INPUT
     button.pull = digitalio.Pull.UP
 
-# Connect an analog two-axis joystick to A4 and A5.
-ax = analogio.AnalogIn(board.A4)
-ay = analogio.AnalogIn(board.A5)
+# Center console controls for 747 (6 levers)
+thr1 = analogio.AnalogIn(board.RCC1)
+thr2 = analogio.AnalogIn(board.RCC2)
+thr3 = analogio.AnalogIn(board.RCC3)
+thr4 = analogio.AnalogIn(board.RCC4)
+flap = analogio.AnalogIn(board.SERVO5)
+spdbrk = analogio.AnalogIn(board.SERVO6)
+
+# reverse thrust (TODO: maybe buttons?)
+#rthr1 = analogio.AnalogIn(board.RCC1)
+#rthr2 = analogio.AnalogIn(board.RCC2)
+#rthr3 = analogio.AnalogIn(board.RCC3)
+#rthr4 = analogio.AnalogIn(board.RCC4)
 
 # Equivalent of Arduino's map() function.
 def range_map(x, in_min, in_max, out_min, out_max):
