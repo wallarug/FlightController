@@ -42,6 +42,7 @@ HID_DEVICE_DATA = {
     "CONSUMER" : DeviceData(report_length=2, usage_page=0x0C, usage=0x01),    # Consumer, Consumer Control
     "SYS_CONTROL" : DeviceData(report_length=1, usage_page=0x01, usage=0x80), # Generic Desktop, Sys Control
     "GAMEPAD" : DeviceData(report_length=6, usage_page=0x01, usage=0x05),     # Generic Desktop, Game Pad
+    "JOYSTICK" : DeviceData(report_length=6, usage_page=0x01, usage=0x04),    # Generic Desktop, Joystick
     "SIMULATION" : DeviceData(report_length=6, usage_page=0x02, usage=0x09),  # Simulation, Airplane Control
     "DIGITIZER" : DeviceData(report_length=5, usage_page=0x0D, usage=0x02),   # Digitizers, Pen
     "XAC_COMPATIBLE_GAMEPAD" : DeviceData(report_length=3, usage_page=0x01, usage=0x05), # Generic Desktop, Game Pad
@@ -208,9 +209,9 @@ def gamepad_hid_descriptor(report_id):
             )))
 
 def flightcontroller_hid_descriptor(report_id):
-    data = HID_DEVICE_DATA["GAMEPAD"]
+    data = HID_DEVICE_DATA["SIMULATION"]
     return hid.ReportDescriptor(
-        description="GAMEPAD",
+        description="SIMULATION",
         report_descriptor=bytes(
             # Gamepad with 16 buttons and two joysticks
             (0x05, data.usage_page, # Usage Page (Generic Desktop Ctrls)
