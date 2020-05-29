@@ -42,6 +42,7 @@ HID_DEVICE_DATA = {
     "CONSUMER" : DeviceData(report_length=2, usage_page=0x0C, usage=0x01),    # Consumer, Consumer Control
     "SYS_CONTROL" : DeviceData(report_length=1, usage_page=0x01, usage=0x80), # Generic Desktop, Sys Control
     "GAMEPAD" : DeviceData(report_length=6, usage_page=0x01, usage=0x05),     # Generic Desktop, Game Pad
+    "SIMULATION" : DeviceData(report_length=6, usage_page=0x02, usage=0x09),  # Simulation, Airplane Control
     "DIGITIZER" : DeviceData(report_length=5, usage_page=0x0D, usage=0x02),   # Digitizers, Pen
     "XAC_COMPATIBLE_GAMEPAD" : DeviceData(report_length=3, usage_page=0x01, usage=0x05), # Generic Desktop, Game Pad
     "RAW" : DeviceData(report_length=64, usage_page=0xFFAF, usage=0xAF),      # Vendor 0xFFAF "Adafruit", 0xAF
@@ -175,6 +176,38 @@ def sys_control_hid_descriptor(report_id):
             )))
 
 def gamepad_hid_descriptor(report_id):
+    data = HID_DEVICE_DATA["GAMEPAD"]
+    return hid.ReportDescriptor(
+        description="GAMEPAD",
+        report_descriptor=bytes(
+            # Gamepad with 16 buttons and two joysticks
+            (0x05, data.usage_page, # Usage Page (Generic Desktop Ctrls)
+             0x09, data.usage,  # Usage (Game Pad)
+             0xA1, 0x01,        # Collection (Application)
+            ) +
+            ((0x85, report_id) if report_id != 0 else ()) +
+            (0x05, 0x09,        #   Usage Page (Button)
+             0x19, 0x01,        #   Usage Minimum (Button 1)
+             0x29, 0x10,        #   Usage Maximum (Button 16)
+             0x15, 0x00,        #   Logical Minimum (0)
+             0x25, 0x01,        #   Logical Maximum (1)
+             0x75, 0x01,        #   Report Size (1)
+             0x95, 0x10,        #   Report Count (16)
+             0x81, 0x02,        #   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+             0x05, 0x01,        #   Usage Page (Generic Desktop Ctrls)
+             0x15, 0x81,        #   Logical Minimum (-127)
+             0x25, 0x7F,        #   Logical Maximum (127)
+             0x09, 0x30,        #   Usage (X)
+             0x09, 0x31,        #   Usage (Y)
+             0x09, 0x32,        #   Usage (Z)
+             0x09, 0x35,        #   Usage (Rz)
+             0x75, 0x08,        #   Report Size (8)
+             0x95, 0x04,        #   Report Count (4)
+             0x81, 0x02,        #   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+             0xC0,              # End Collection
+            )))
+
+def flightcontroller_hid_descriptor(report_id):
     data = HID_DEVICE_DATA["GAMEPAD"]
     return hid.ReportDescriptor(
         description="GAMEPAD",
