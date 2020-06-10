@@ -19,12 +19,21 @@ axes = [thr1, thr2, thr3, thr4, spdbrk, flaps]
 def get_voltage(pin):
     return (pin.value * 3.3) / 65536
 
+def get_percentage(pin):
+    _max = 100
+    _min = 0
+    
+    return (100 - ((pin.value * 3.3 / 65536) / 2.54 * 100))
+
 report = ""
+
  
 while True:
     report = ""
-    print((get_voltage(analog_in),))
-    time.sleep(0.1)
 
     for axis in axes:
-        get_voltage
+        report += str(get_voltage(axis)) + ", "
+
+    print(report)
+
+    time.sleep(0.1)
