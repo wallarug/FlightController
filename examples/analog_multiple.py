@@ -1,6 +1,7 @@
 import time
 import board
 import busio
+import math
 
 from digitalio import DigitalInOut, Direction
 from analogio import AnalogIn
@@ -20,10 +21,7 @@ def get_voltage(pin):
     return (pin.value * 3.3) / 65536
 
 def get_percentage(pin):
-    _max = 100
-    _min = 0
-    
-    return (100 - ((pin.value * 3.3 / 65536) / 2.54 * 100))
+    return (int((pin.value * 3.3 / 65536) / 3.3 * 100))
 
 report = ""
 
@@ -32,7 +30,7 @@ while True:
     report = ""
 
     for axis in axes:
-        report += str(get_voltage(axis)) + ", "
+        report += str(get_percentage(axis)) + ", "
 
     print(report)
 
