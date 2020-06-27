@@ -22,10 +22,10 @@
 #
 
 """
-`adafruit_hid.gamepad.Gamepad`
+`adafruit_hid.joystick.Joystick`
 ====================================================
 
-* Author(s): Dan Halbert
+* Author(s): Cian Byrne (wallarug)
 """
 
 import struct
@@ -34,7 +34,7 @@ import time
 from . import find_device
 
 
-class Gamepad:
+class Joystick:
     """Emulate a generic joystick controller with 3 buttons,
     numbered 1-3, and three joysticks, one controlling
     ``x` and ``y`` values, and the other controlling ``z`` values.
