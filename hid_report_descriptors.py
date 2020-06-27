@@ -385,6 +385,7 @@ REPORT_DESCRIPTOR_FUNCTIONS = {
     "CONSUMER" : consumer_hid_descriptor,
     "SYS_CONTROL" : sys_control_hid_descriptor,
     "GAMEPAD" : gamepad_hid_descriptor,
+    "JOYSTICK" : joystick_hid_descriptor,
     "DIGITIZER" : digitizer_hid_descriptor,
     "XAC_COMPATIBLE_GAMEPAD" : xac_compatible_gamepad_hid_descriptor,
     "RAW" : raw_hid_descriptor,
