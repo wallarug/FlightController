@@ -27,6 +27,9 @@ HID specific descriptors
 ========================
 
 * Author(s): Dan Halbert
+
+https://github.com/adafruit/circuitpython/blob/master/tools/hid_report_descriptors.py
+
 """
 
 from collections import namedtuple
