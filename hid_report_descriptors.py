@@ -209,19 +209,17 @@ def gamepad_hid_descriptor(report_id):
             )))
 
 def joystick_hid_descriptor(report_id):
-    data = HID_DEVICE_DATA["SIMULATION"]
+    data = HID_DEVICE_DATA["JOYSTICK"]
     return hid.ReportDescriptor(
-        description="SIMULATION",
+        description="JOYSTICK",
         report_descriptor=bytes(
-            # Gamepad with 16 buttons and 6 joysticks
+            # Joystick with 3 buttons and 3 joysticks
             (0x05, data.usage_page, # Usage Page (Generic Desktop Ctrls)
-             0x09, data.usage,  # Usage (Game Pad)
+             0x09, data.usage,  # Usage (Joystick)
              0xA1, 0x01,        # Collection (Application)
             ) +
             ((0x85, report_id) if report_id != 0 else ()) +
-            (0x09, 0x04,        # Usage (Joystick)
-            0xA1, 0x01,        # Collection (Application)
-            0x09, 0x01,        #   Usage (Pointer)
+            (0x09, 0x01,        #   Usage (Pointer)
             0xA1, 0x00,        #   Collection (Physical)
             0x09, 0x30,        #     Usage (X)
             0x09, 0x31,        #     Usage (Y)
