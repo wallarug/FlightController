@@ -211,6 +211,38 @@ def gamepad_hid_descriptor(report_id):
              0xC0,              # End Collection
             )))
 
+def flightcontroller_hid_descriptor(report_id):
+    data = HID_DEVICE_DATA["SIMULATION"]
+    return hid.ReportDescriptor(
+        description="SIMULATION",
+        report_descriptor=bytes(
+            # Gamepad with 16 buttons and two joysticks
+            (0x05, data.usage_page, # Usage Page (Simulation)
+             0x09, data.usage,  # Usage (Airplane Controls)
+             0xA1, 0x01,        # Collection (Application)
+            ) +
+            ((0x85, report_id) if report_id != 0 else ()) +
+            (0x05, 0x09,        #   Usage Page (Button)
+             0x19, 0x01,        #   Usage Minimum (Button 1)
+             0x29, 0x10,        #   Usage Maximum (Button 16)
+             0x15, 0x00,        #   Logical Minimum (0)
+             0x25, 0x01,        #   Logical Maximum (1)
+             0x75, 0x01,        #   Report Size (1)
+             0x95, 0x10,        #   Report Count (16)
+             0x81, 0x02,        #   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+             0x05, 0x01,        #   Usage Page (Generic Desktop Ctrls)
+             0x15, 0x81,        #   Logical Minimum (-127)
+             0x25, 0x7F,        #   Logical Maximum (127)
+             0x09, 0x30,        #   Usage (X)
+             0x09, 0x31,        #   Usage (Y)
+             0x09, 0x32,        #   Usage (Z)
+             0x09, 0x34,        #   Usage (Rz)
+             0x75, 0x08,        #   Report Size (8)
+             0x95, 0x04,        #   Report Count (4)
+             0x81, 0x02,        #   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
+             0xC0,              # End Collection
+            )))
+
 def joystick_hid_descriptor(report_id):
     data = HID_DEVICE_DATA["JOYSTICK"]
     return hid.ReportDescriptor(
@@ -254,38 +286,6 @@ def joystick_hid_descriptor(report_id):
             0x95, 0x01,        #   Report Count (1)
             0x81, 0x01,        #   Input (Const,Array,Abs,No Wrap,Linear,Preferred State,No Null Position)
             0xC0,              # End Collection
-            )))
-
-def flightcontroller_hid_descriptor(report_id):
-    data = HID_DEVICE_DATA["SIMULATION"]
-    return hid.ReportDescriptor(
-        description="SIMULATION",
-        report_descriptor=bytes(
-            # Gamepad with 16 buttons and two joysticks
-            (0x05, data.usage_page, # Usage Page (Generic Desktop Ctrls)
-             0x09, data.usage,  # Usage (Game Pad)
-             0xA1, 0x01,        # Collection (Application)
-            ) +
-            ((0x85, report_id) if report_id != 0 else ()) +
-            (0x05, 0x09,        #   Usage Page (Button)
-             0x19, 0x01,        #   Usage Minimum (Button 1)
-             0x29, 0x10,        #   Usage Maximum (Button 16)
-             0x15, 0x00,        #   Logical Minimum (0)
-             0x25, 0x01,        #   Logical Maximum (1)
-             0x75, 0x01,        #   Report Size (1)
-             0x95, 0x10,        #   Report Count (16)
-             0x81, 0x02,        #   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
-             0x05, 0x01,        #   Usage Page (Generic Desktop Ctrls)
-             0x15, 0x81,        #   Logical Minimum (-127)
-             0x25, 0x7F,        #   Logical Maximum (127)
-             0x09, 0x30,        #   Usage (X)
-             0x09, 0x31,        #   Usage (Y)
-             0x09, 0x32,        #   Usage (Z)
-             0x09, 0x35,        #   Usage (Rz)
-             0x75, 0x08,        #   Report Size (8)
-             0x95, 0x04,        #   Report Count (4)
-             0x81, 0x02,        #   Input (Data,Var,Abs,No Wrap,Linear,Preferred State,No Null Position)
-             0xC0,              # End Collection
             )))
 
 def digitizer_hid_descriptor(report_id):
@@ -389,6 +389,7 @@ REPORT_DESCRIPTOR_FUNCTIONS = {
     "SYS_CONTROL" : sys_control_hid_descriptor,
     "GAMEPAD" : gamepad_hid_descriptor,
     "JOYSTICK" : joystick_hid_descriptor,
+    "SIMULATION" : flightcontroller_hid_descriptor,
     "DIGITIZER" : digitizer_hid_descriptor,
     "XAC_COMPATIBLE_GAMEPAD" : xac_compatible_gamepad_hid_descriptor,
     "RAW" : raw_hid_descriptor,
