@@ -106,7 +106,7 @@ class FlightControl:
         self.press_buttons(*buttons)
         self.release_buttons(*buttons)
 
-    def move_joysticks(self, x=None, y=None, z=None, rz=None):
+    def move_joysticks(self, x=None, y=None, z=None, r_z=None):
         """Set and send the given joystick values.
         The joysticks will remain set with the given values until changed
 
@@ -130,8 +130,8 @@ class FlightControl:
             self._joy_y = self._validate_joystick_value(y)
         if z is not None:
             self._joy_z = self._validate_joystick_value(z)
-        if rz is not None:
-            self._joy_rz = self._validate_joystick_value(rz)
+        if r_z is not None:
+            self._joy_rz = self._validate_joystick_value(r_z)
         self._send()
 
     def reset_all(self):
@@ -147,7 +147,7 @@ class FlightControl:
         """Send a report with all the existing settings.
         If ``always`` is ``False`` (the default), send only if there have been changes.
         """
-       struct.pack_into(
+        struct.pack_into(
             "<Hbbbb",
             self._report,
             0,
@@ -155,7 +155,7 @@ class FlightControl:
             self._joy_x,
             self._joy_y,
             self._joy_z,
-            self._joy_r_z,
+            self._joy_rz,
         )
 
         if always or self._last_report != self._report:
@@ -171,6 +171,6 @@ class FlightControl:
 
     @staticmethod
     def _validate_joystick_value(value):
-        if not 0 <= value <= 127:
+        if not -127 <= value <= 127:
             raise ValueError("Joystick value must be in range -127 to 127")
         return value
