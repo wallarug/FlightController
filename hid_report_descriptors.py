@@ -45,7 +45,7 @@ HID_DEVICE_DATA = {
     "CONSUMER" : DeviceData(report_length=2, usage_page=0x0C, usage=0x01),    # Consumer, Consumer Control
     "SYS_CONTROL" : DeviceData(report_length=1, usage_page=0x01, usage=0x80), # Generic Desktop, Sys Control
     "GAMEPAD" : DeviceData(report_length=6, usage_page=0x01, usage=0x05),     # Generic Desktop, Game Pad
-    "QUADRANT" : DeviceData(report_length=6, usage_page=0x01, usage=0x04),    # Generic Desktop, Joystick
+    "QUADRANT" : DeviceData(report_length=5, usage_page=0x01, usage=0x04),    # Generic Desktop, Joystick
     "JOYSTICK" : DeviceData(report_length=6, usage_page=0x01, usage=0x04),    # Generic Desktop, Joystick
     "SIMULATION" : DeviceData(report_length=6, usage_page=0x02, usage=0x09),  # Simulation, Airplane Control
     "DIGITIZER" : DeviceData(report_length=5, usage_page=0x0D, usage=0x02),   # Digitizers, Pen
